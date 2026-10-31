@@ -2,13 +2,17 @@ package com.example.Cinema.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+
 import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"session_id", "row_number", "seat_number"})
-})
+@Table(
+        name = "tickets",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"session_id", "row_number", "seat_number"})
+        }
+)
 public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +25,10 @@ public class Ticket {
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
+
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
 
     private Integer rowNumber;
     private Integer seatNumber;
